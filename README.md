@@ -17,3 +17,11 @@ Don't expect this to work yet. At all. But feel free to have a look around, I gu
 * Uses bookmarks as storage, so syncing to your other devices is handled by your browser
 * Drag & drop to rearrange lists, tabs within lists, and even move tabs to other lists
 * Click on a tab list item to load that tab list and go directly to that tab
+
+## Building from Source
+
+```shell
+$ cd /path/to/tablists
+$ npm install
+$ grunt build
+```
