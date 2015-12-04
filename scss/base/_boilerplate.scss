@@ -1,0 +1,29 @@
+//
+// Boilerplate - direct element styles that don't warrant a component file
+//
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {}
+
+body {
+    font-size: 100%;
+    font-family: $base-font-family;
+    line-height: $base-line-height;
+    color: $base-color;
+}
+
+a {
+    color: $link-color;
+
+    &:hover,
+    &:focus {
+        color: $link-hover-color;
+    }
+}
+
+button {
+    cursor: pointer;
+}

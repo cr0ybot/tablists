@@ -1,0 +1,30 @@
+//
+// Settings
+//
+
+// Colors
+$colors: (
+    'white': #FFF,
+    'grey': #666,
+    'black': #000
+);
+
+// color map util
+@function color($key) {
+    @if not map-has-key($colors, $key) {
+        @warn "$colors key `#{$key}` not found."
+    }
+    @return map-get($colors, $key);
+}
+
+// Base variables
+$base-color: color('black');
+$base-font-family: 'Roboto', sans-serif;
+$base-line-height: 1.25;
+
+// Component variables
+$link-color: color('grey');
+$link-hover-color: color('black');
+
+// Util variables
+$spacing: 1.5rem;

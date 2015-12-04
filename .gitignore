@@ -1,3 +1,5 @@
 .DS_Store
 node_modules
-css/*.css
+bower_components
+css/*
+!css/README.md
