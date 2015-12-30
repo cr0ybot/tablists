@@ -1,3 +1,117 @@
 //
 // TabList
 //
+
+.tablists {
+    display: flex;
+    //flex-direction: column;
+    //align-items: stretch;
+    flex: 1;
+    font-size: 0.75em;
+
+    .tablist-root {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-start;
+        flex: 1;
+
+        margin: 0;
+        padding: 0 0.5em 0.5em;
+        overflow-x: scroll;
+
+        > li {
+            //display: block;
+            margin-left: 0.5em;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .tablist {
+        display: flex;
+        flex-direction: column;
+        //justify-content: flex-start;
+        //width: 12em;
+        flex-basis: 12em;
+        flex-grow: 1;
+
+        min-width: 12em;
+        max-width: 24em;
+        margin: 0;
+        padding: 0.25em;
+
+        background-color: color('greyLight');
+        cursor: pointer;
+
+        &:hover, &:focus {
+            background-color: lighten(color('greyLight'), 10%);
+            box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.25);
+        }
+    }
+
+    .tablist-header {
+        flex: 0 0 2em;
+
+        position: relative;
+        width: fit-content; // allows content-based width
+        max-width: 80%;
+        //height: 2em;
+        padding: 0.33em 0.5em 0;
+
+        background-color: color('greyLightest');
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 100%;
+            display: block;
+            width: 0;
+            height: 0;
+
+            border-style: solid;
+            border-color: color('greyLightest');
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-top-width: 2em;
+            border-right-width: 0;
+            border-bottom-width: 0;
+            border-left-width: 1em;
+        }
+
+        h1 {
+            display: inline-block;
+            width: 100%;
+            height: 1.25em;
+            margin: 0;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    .tablist-box {
+        flex: 1;
+        padding: 0.5em 0.25em;
+        background-color: color('greyLightest');
+        overflow: auto;
+
+        ol {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .tab {
+        list-style-position: inside;
+        font-size: 0.75em;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}

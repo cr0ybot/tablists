@@ -8,101 +8,68 @@
 
     <link rel="stylesheet" href="css/pages/options.css" />
 </head>
-<body class="frame">
-    <div class="navigation">
-        <h1>TabLists</h1>
-        <ul class="menu">
-            <li class="selected">
-                <a href="#startup">Startup</a>
-            </li>
-            <li>
-                <a href="#info">Info</a>
-            </li>
-            <li>
-                <a href="#privacy">Privacy</a>
-            </li>
-        </ul>
-    </div>
-    <div class="mainview view">
-        <div id="size-presets" class="selected">
-            <header>
-                <h1>Startup</h1>
-            </header>
-            <div class="content">
-                <!--
-                <h3>Add or remove quick-set sizes from resp0nsv:</h3>
-                <input id="all-size" type="checkbox" /> <label for="all-size">Select all</label>
-                <ul id="size-list"></ul>
-                <button class="function" value="add sizePresets">Add new size preset</button>
-                <button class="function remove" value="remove sizePresets" disabled="">Remove selected items</button>
-                <div class="controls">
-                    <button class="function" value="save sizePresets">Save Size Presets</button>
-                    <div class="spacer"></div>
-                    <button class="function" value="undo sizePresets">Undo Changes</button>
-                    <button class="function" value="reset sizePresets">Reset to defaults</button>
+<body class="chrome-bootstrap">
+    <div class="frame">
+        <div class="navigation">
+            <h1>TabLists</h1>
+            <ul class="menu">
+                <li class="selected">
+                    <a href="#startup">Startup</a>
+                </li>
+                <li>
+                    <a href="#info">Info</a>
+                </li>
+                <li>
+                    <a href="#privacy">Privacy</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mainview view">
+            <div id="startup" class="selected">
+                <header>
+                    <h1>Startup</h1>
+                </header>
+                <div class="content">
+                    
                 </div>
-            -->
+            </div>
+            <div id="info">
+                <header>
+                    <h1>Info</h1>
+                </header>
+                <div class="content">
+                    <h3>What is TabLists?</h3>
+                    <p><b>TabLists</b> is a tool for organized people to manage their browser tabs.</p>
+                    <p>TabLists was inspired by Firefox TabGroups/Panorama, a unique feature that will soon be removed. As a web developer, I used to rely heavily on TabGroups to organize my browsing sessions into groups pertaining to each project. With the announcement of its removal, I searched for a plugin that could replace it that was similar enough in functionality to not completely destroy my workflow, yet would hopefully handle the tabs in a more resource-friendly way. There were none.</p>
+                    <h3>Why should I use TabLists? Aren't you just making bookmarks?</h3>
+                    <p>Well, yes, basically. TabLists automatically keeps track of your tabs as you open and close them, saving them to bookmarks in the background. You can then quickly switch to another group of tabs, which will be loaded from those bookmarks. If you want to sync your TabLists across devices, let the browser do it for you, and TabLists will pick them up.</p>
+                    <p>If you aren't convinced, or if you've got a suggestion that would make this more useful, please use the "Send Feedback" link on the Chrome Extension web store page.</p>
+                    <h3>How do I use it?</h3>
+                    <p>If you're familiar with the old TabGroups, there are enough similarities that you shouldn't have many problems. The largest difference is that these are lists, which means no messy, differently-sized boxes with website preview tiles. Simply click the TabLists button to open a popup window containing all of your TabLists, and click the title of the list to load those tabs with your last active tab restored. If you want to load a list with a specific tab loaded as active, just click on that tab title in the list instead.</p>
+                    <h3>Who made TabLists?</h3>
+                    <p><b>TabLists</b> was developed by <a href="http://coryhughart.com" target="_blank">Cory Hughart</a>, a.k.a. 'cr0ybot'.</p>
+                    <h3>How can I support TabLists?</h3>
+                    <p>I made this mainly for myself in order to deperately cling to a web browsing workflow that works well for me, but if you feel like it's helped you too and you want to show your support, you can donate some bitcoins!</p>
+                    <p><i class="fa fa-btc"></i><a href="bitcoin:1GdBCs2C18kTTJYUt85Znaa3ep5dpAtuVZ?amount=0.01&label=tablists" target="_blank">Send 0.01 BTC to 1GdBCs2C18kTTJYUt85Znaa3ep5dpAtuVZ</a></p>
+                    <p><img src="img/qr_bitcoin.png" alt="1GdBCs2C18kTTJYUt85Znaa3ep5dpAtuVZ" /></p>
+                </div>
+            </div>
+            <div id="privacy">
+                <header>
+                    <h1>Privacy</h1>
+                </header>
+                <div class="content">
+                    <h3>I am not trcking you</h3>
+                    <p>I, Cory Hughart, am not collecting any data from you during the course of your usage of this browser extension. I cannot speak on behalf of Google (Chrome) or Mozilla (Firefox).</p>
+                </div>
             </div>
         </div>
-        <div id="info">
-            <header>
-                <h1>Info</h1>
-            </header>
-            <div class="content">
-                <h3>What is TabLists?</h3>
-                <p><b>TabLists</b> is a tool for organized people to manage their browser tabs.</p>
-                <p>TabLists was inspired by Firefox TabGroups/Panorama, a unique feature that will soon be removed. As a web developer, I used to rely heavily on TabGroups to organize my browsing sessions into groups pertaining to each project. With the announcement of its removal, I searched for a plugin that could replace it that was similar enough in functionality to not completely destroy my workflow, yet would hopefully handle the tabs in a more resource-friendly way. There were none.</p>
-                <h3>Why should I use TabLists? Aren't you just making bookmarks?</h3>
-                <p>Well, yes, basically. TabLists automatically keeps track of your tabs as you open and close them, saving them to bookmarks in the background. You can then quickly switch to another group of tabs, which will be loaded from those bookmarks. If you want to sync your TabLists across devices, let the browser do it for you, and TabLists will pick them up.</p>
-                <p>If you aren't convinced, or if you've got a suggestion that would make this more useful, please use the "Send Feedback" link on the Chrome Extension web store page.</p>
-                <h3>How do I use it?</h3>
-                <p>If you're familiar with the old TabGroups, there are enough similarities that you shouldn't have many problems. The largest difference is that these are lists, which means no messy, differently-sized boxes with website preview tiles. Simply click the TabLists button to open a popup window containing all of your TabLists, and click the title of the list to load those tabs with your last active tab restored. If you want to load a list with a specific tab loaded as active, just click on that tab title in the list instead.</p>
-                <h3>Who made TabLists?</h3>
-                <p><b>TabLists</b> was developed by <a href="http://coryhughart.com" target="_blank">Cory Hughart</a>, a.k.a. 'cr0ybot'.</p>
-                <h3>How can I support TabLists?</h3>
-                <p>I made this mainly for myself in order to deperately cling to a web browsing workflow that works well for me, but if you feel like it's helped you too and you want to show your support, you can donate some bitcoins!</p>
-                <p><i class="fa fa-btc"></i><a href="bitcoin:1GdBCs2C18kTTJYUt85Znaa3ep5dpAtuVZ?amount=0.01&label=tablists" target="_blank">Send 0.01 BTC to 1GdBCs2C18kTTJYUt85Znaa3ep5dpAtuVZ</a></p>
-                <p><img src="img/qr_bitcoin.png" alt="1GdBCs2C18kTTJYUt85Znaa3ep5dpAtuVZ" /></p>
-            </div>
-        </div>
-        <div id="privacy">
-            <header>
-                <h1>Privacy</h1>
-            </header>
-            <div class="content">
-                <h3>Google Analytics Notice</h3>
-                <p>I (Cory Hughart) am using Google Analytics to track usage data of the resp0nsv Google Chrome extension. Tracking certain information allows me to better understand how you use resp0nsv, including how to make it better. No personally identifiable information about you is made available to me, but I cannot promise the same for Google. Please have a look at <a href="http://www.google.com/analytics/learn/privacy.html">Google's privacy policy</a>.</p>
-                <p>Google Analytics captures data about you, and you deserve to know this and have the ability to opt out. You can skip to the end of this right now and untick the checkbox below to opt out of analytics altogether, if you'd like. I respect your right to privacy, and I apologize if you are put off by this.</p>
-                <h4>What Google Analytics records:</h4>
-                <ul class="list">
-                    <li>Your approximate location (down to the city level).</li>
-                    <li>What kind of browser (obviously Google Chrome), operating system, and device you are using.</li>
-                    <li>How long you stay on certain pages.</li>
-                    <li>What you click on.</li>
-                    <li>...and much more; most of which may not be useful for usage analytics on an extension.</li>
-                </ul>
-                <h4>What I may learn from your data:</h4>
-                <ul class="list">
-                    <li>If usage is high enough in specific locations, localization might be needed.</li>
-                    <li>If users are spending less time with resp0nsv on one platform vs another, I may need to check for bugs on those devices/OS's.</li>
-                    <li>If certain features are rarely used but feature prominently in the UI, it may need to be moved (the converse is also a possibility).</li>
-                    <li>...and much, much more.</li>
-                </ul>
-                <h4>Untick the checkbox below if you wish to opt out of resp0nsv's use of Google Analytics:</h4>
-                <form class="form">
-                    <input id="analytics" type="checkbox" />
-                    <label for="analytics">Send anonymous usage data (via Google Analytics) to help the author (Cory Hughart) improve resp0nsv.</label>
-                    <div class="controls">
-                        <button type="submit" class="function" value="save analytics">Save Privacy Settings</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <footer id="footer">
+    		<p>TabLists © 2015 Cory Hughart | this page uses a modified version of <a href="https://github.com/better-history/chrome-bootstrap" target="_blank">Chrome UI Bootstrap by roykolak</a></p>
+    	</footer>
     </div>
-    <footer id="footer">
-		<p>TabLists © 2015 Cory Hughart | this page uses a modified version of <a href="https://github.com/better-history/chrome-bootstrap" target="_blank">Chrome UI Bootstrap by roykolak</a></p>
-	</footer>
 	<!--<script src="js/jquery-1.11.1.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="js/options.js"></script>
 </body>
 </html>

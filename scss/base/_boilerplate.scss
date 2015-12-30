@@ -6,13 +6,19 @@
     box-sizing: border-box;
 }
 
-html, body {}
+html, body {
+    height: 100%;
+    min-height: 489px;
+}
 
 body {
+    margin: 0;
+    padding: 0;
     font-size: 100%;
     font-family: $base-font-family;
     line-height: $base-line-height;
     color: $base-color;
+    overflow: hidden;
 }
 
 a {

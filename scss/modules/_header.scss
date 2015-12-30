@@ -2,4 +2,30 @@
 // Header - main site header
 //
 
-#header {}
+#header {
+    position: relative;
+    margin: 0.5em;
+
+    h1 {
+        margin: 0;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .toolbar {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        li {
+            display: block;
+            float: left;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+}

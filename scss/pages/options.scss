@@ -4,3 +4,21 @@
 
 // Import Chrome Bootstrap
 @import "../../bower_components/chrome-bootstrap/chrome-bootstrap";
+
+.chrome-bootstrap {
+    /* Footer
+    ============================================== */
+    footer {
+      position: fixed;
+      background: #FFF;
+      /*width: 893px;*/
+      width: 100%;
+      height: 40px;
+      bottom: 0;
+      padding-left: 13px;
+      z-index: 4;
+      border-top: 1px solid #EEE;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+}

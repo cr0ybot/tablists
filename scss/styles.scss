@@ -11,7 +11,8 @@
 @import "base/settings",
         "base/fonts",
         "base/boilerplate",
-        "base/typography";
+        "base/typography",
+        "base/layout";
 
 // Components
 @import "components/links",
@@ -25,5 +26,4 @@
         "modules/tablist";
 
 // Pages
-@import "pages/options",
-        "pages/popup";
+//@import "pages/options";
