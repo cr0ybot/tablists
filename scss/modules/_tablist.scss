@@ -107,11 +107,29 @@
     }
 
     .tab {
-        list-style-position: inside;
+        margin-top: 0.25em;
+        //list-style-position: inside;
+        list-style: none;
         font-size: 0.75em;
 
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        a, img {
+            vertical-align: middle;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            margin-right: 0.5em;
+        }
     }
 }

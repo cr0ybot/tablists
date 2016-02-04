@@ -10,6 +10,7 @@
         margin: 0;
         text-align: center;
         text-transform: uppercase;
+        line-height: 1.5rem;
     }
 
     .toolbar {
@@ -20,12 +21,26 @@
         right: 0;
 
         li {
-            display: block;
-            float: left;
+            display: inline-block;
+        }
+
+        a, button {
+            padding: 0.25em;
         }
 
         a {
             text-decoration: none;
+        }
+
+        button {
+            font-size: inherit;
+            border: none;
+            background-color: transparent;
+            color: $link-color;
+
+            &:hover, &:focus {
+                color: $link-hover-color;
+            }
         }
     }
 }
