@@ -14,7 +14,7 @@ var defaultOptions = {
     options,
     bookmarkTree,
     curentTabs,
-    tabLists;
+    tabLists = [];
 
 /**
  * TabListManager class
@@ -37,7 +37,7 @@ function TabListManager(passedOptions) {
 
     this.initMessageListener = function() {
 
-        chrome.extension.onMessage.addListener(function(message, sender, callback) {
+        chrome.runtime.onMessage.addListener(function(message, sender, callback) {
 
             // Submit
             if (message.submit) {
@@ -407,11 +407,14 @@ function TabListManager(passedOptions) {
         console.log('Options passed to init: '+JSON.stringify(passedOptions));
         me.checkOptions(passedOptions);
     }
-}
-// end TabListManager class
+} // end TabListManager class
 
 
-// TabList class
+/**
+ * TabList class
+ * @constructor
+ * @param {object} bookmarkTree
+ */
 function TabList(bookmarkTree) {
     console.log('TabList initialized!');
 
