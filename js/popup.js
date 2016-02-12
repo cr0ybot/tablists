@@ -4,7 +4,9 @@
  * by Cory Hughart <cory@coryhughart.com>
  */
 
-var loading,
+var tlp,
+    loading,
+    tabListContainer,
     tabLists;
 
 function TabListPopup() {
@@ -24,17 +26,22 @@ function TabListPopup() {
         console.log(tabLists);
         console.groupEnd();
 
-        loading.classList.add('done');
         // Remove loader after fade-out animation
-        // Should we use an animation complete listener instead?
-        setTimeout(function() {
-            document.body.removeChild(loading)
-        }, 1000);
-    }
+        loading.addEventListener('animationend', function(e) {
+            document.body.removeChild(loading);
+        }, false);
+        loading.classList.add('done');
+    } // end init
+
+    /*
+    this.renderTabLists() {
+        // TODO
+    } // end renderTabLists
+    */
 } // end TabListPopup
 
 document.addEventListener("DOMContentLoaded", function(event) {
     loading = document.getElementById('loading');
-
-    var tlp = new TabListPopup();
+    tabListContainer = document.getElementById('tablists');
+    tlp = new TabListPopup();
 });

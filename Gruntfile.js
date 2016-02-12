@@ -62,9 +62,9 @@ module.exports = function(grunt) {
             options: {
                 files: [{
                     expand: true,
-                    cwd: '.',
-                    src: ['**/*[^min].js'],
-                    dest: '.',
+                    cwd: 'js',
+                    src: ['**/*.js', '!**/*.min.js'],
+                    dest: 'js',
                     ext: '.min.js'
                 }]
             },
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
 
         watch: {
             options: {
-                livereload: true
+                livereload: false
             },
             html: {
                 files: '**/*.html'

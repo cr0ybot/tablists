@@ -138,6 +138,10 @@ function TabListManager(passedOptions) {
 
     // TabListManager class methods
 
+    /**
+     * Checks options passed to TabListManager (if any)
+     * Looks for folderID and kicks off tablist setup
+     **/
     this.checkOptions = function(passedOptions) {
         console.log('Checking options...');
 
@@ -173,7 +177,7 @@ function TabListManager(passedOptions) {
         //console.log('defaultOptions: ' + JSON.stringify(defaultOptions));
 
         // Options are good, lets do things
-        me.getBookmarksTree(options.folderID, me.setupTabs);
+        me.getBookmarksTree(options.folderID, me.setupTabLists);
     } // end checkOptions
 
     this.saveOptions = function(data, callback) {
@@ -264,128 +268,26 @@ function TabListManager(passedOptions) {
         });
     } // end getBookmarksTree
 
-    this.setupTabs = function(bookmarkTree) {
-        console.log('Setting up TabLists...');
-        //console.log(bookmarkTree);
-
+    this.setupTabLists = function(bookmarkTree) {
+        // If there are no bookmarks, create a new default
         if (bookmarkTree.children.length == 0) {
-            // No tab lists, let's create one
-            me.createList('Default', function(results) {
+            // No tab lists, let's create one & add it to the tabLists array
+            var tl = new TabList();
+            tabLists.push(tl);
+            tl.createNew('Default', function(results) {
                 options.activeList = 0;
-                me.compareListToTabs(options.activeList);
+                //tl.compareListToTabs(options.activeList);
             });
         }
         else {
-            me.compareListToTabs(options.activeList);
-        }
-    } // end setupTabs
-
-    this.compareListToTabs = function(listID, tabs, callback) {
-        console.log('Comparing list '+listID+' with tabs...');
-
-        var list = bookmarkTree.children[listID].children;
-
-        // Nested function to handle comparison
-        function doCompare(theTabs) {
-            currentTabs = theTabs;
-            console.group('Current tabs:');
-            console.log(currentTabs);
-            console.groupEnd();
-
-            if (list.length != currentTabs.length) {
-                console.log('Your tabs are not synced with the list!');
-                if (confirm('Your tabs are not synced with TabList '+listID+'!\n\nSync now?')) {
-                    // sync tabs to list
-                    me.syncTabsToList(listID, theTabs, callback);
-                }
-            }
-            else if (list.length > 0) {
-                for (i = 0; i < currentTabs.length; i++) {
-                    if (i >= list.length || currentTabs[i].url != list[i].url) {
-                        console.log('Your tabs are not synced with the list!');
-                        if (confirm('Your tabs are not synced with TabList '+listID+'!\n\nSync now?')) {
-                            // sync tabs to list
-                            me.syncTabsToList(listID, theTabs, callback);
-                        }
-                        break;
-                    }
-                    else {
-                        console.log('Bookmark '+i+' is in sync');
-                    }
-                }
-            }
-            else {
-                me.syncTabsToList(listID, theTabs, callback);
+            // Create TabLists for each bookmarkTree child
+            for (var i = 0; i < bookmarkTree.children.length; i++) {
+                var tl = new TabList();
+                tabLists.push(tl);
+                tl.initFromBookmarkTree(bookmarkTree.children[i]);
             }
         }
-
-        if (Array.isArray(tabs)) {
-            doCompare(tabs);
-        }
-        else {
-            // Get all tabs in current window
-            chrome.tabs.query({}, function(results) {
-                if (chrome.runtime.lastError) {
-                    console.warn(chrome.runtime.lastError.message);
-                }
-
-                if (results) {
-                    doCompare(results);
-                }
-            });
-        }
-    } // end compareListToTabs
-
-    this.syncTabsToList = function(listID, tabs, callback) {
-        console.group('Syncing tabs to list '+listID);
-
-        var list = bookmarkTree.children[listID].children;
-
-        for (var i = 0; i < tabs.length; i++) {
-            // check if index fits in current bookmark list
-            // if it does, we can update the bookmark instead of deleting & creating one
-            if (i < list.length) {
-                console.log('Updating bookmark '+i+' ('+list[i].id+')');
-
-                chrome.bookmarks.update(list[i].id, {
-                    'title': tabs[i].title,
-                    'url': tabs[i].url
-                });
-
-                // if we're within the original bookmark list length but this is the last tab,
-                // the rest of the bookmarks need to be deleted
-                if (i == tabs.length - 1) {
-                    for (var j = i + 1; j < list.length; j++) {
-                        console.log('Removing bookmark '+j+' ('+list[j].id+')');
-                        chrome.bookmarks.remove(list[j].id);
-                    }
-                }
-            }
-            // if we're past the original length, we need to create new bookmarks
-            else {
-                console.log('Creating bookmark '+i);
-                chrome.bookmarks.create({
-                    'parentId': bookmarkTree.children[listID].id,
-                    'title': tabs[i].title,
-                    'url': tabs[i].url
-                });
-            }
-            console.groupEnd();
-        }
-    } // end syncTabsToList
-
-    this.createList = function(title, callback) {
-        chrome.bookmarks.create({
-            parentId: options.folderID,
-            title: title
-        }, function(results) {
-            if (chrome.runtime.lastError) {
-                console.warn(chrome.runtime.lastError.message);
-            }
-
-            if (typeof callback === 'function') callback(results);
-        });
-    } // end createList
+    } // end setupTabLists
 
     // TabListManager constructor
 
@@ -413,13 +315,154 @@ function TabListManager(passedOptions) {
 /**
  * TabList class
  * @constructor
- * @param {object} bookmarkTree
  */
-function TabList(bookmarkTree) {
-    console.log('TabList initialized!');
+function TabList() {
+    console.log('Empty TabList initialized');
 
-    var me = this;
+    var me = this,
+        treeNode;
 
+    // TabList getters & setters
+
+    this.getID = function() {
+        return treeNode.id;
+    }
+
+    this.getName = function() {
+        return treeNode.title;
+    }
+
+    this.setName = function(name, callback) {
+        chrome.bookmarks.update(me.getID(), {'title': name}, callback);
+    }
+
+    /**
+     * Initialize TabList from bookmarkTree
+     **/
+    this.initFromBookmarkTree = function(bookmarkTree, callback) {
+        console.log('TabList initializing from bookmark tree node '+bookmarkTree.id+':'+bookmarkTree.title);
+        //console.log(bookmarkTree);
+
+        me.treeNode = bookmarkTree;
+
+        if (typeof callback === 'function') callback(me);
+    } // end initFromBookmarkTree
+
+    /**
+     * Initialize TabList with a newly-created bookmark tree
+     **/
+    this.createNew = function(title, callback) {
+        chrome.bookmarks.create({
+            parentId: options.folderID,
+            title: title
+        }, function(results) {
+            if (chrome.runtime.lastError) {
+                console.warn(chrome.runtime.lastError.message);
+            }
+
+            me.treeNode = results;
+            me.compareListToTabs(callback);
+
+            //if (typeof callback === 'function') callback(results);
+        });
+    } // end createNew
+
+    /**
+     * Compare bookmark list with current window's tabs
+     **/
+    this.compareListToTabs = function(callback) {
+        var list = treeNode.children;
+
+        console.log('Comparing list '+treeNode.id+':'+treeNode.title+' with tabs...');
+
+        // Nested function to handle comparison
+        function doCompare(theTabs) {
+            currentTabs = theTabs;
+            console.group('Current tabs:');
+            console.log(currentTabs);
+            console.groupEnd();
+
+            if (list.length != currentTabs.length) {
+                console.log('Your tabs are not synced with this list!');
+                if (confirm('Your tabs are not synced with TabList "'+treeNode.title+'"!\n\nSync now?')) {
+                    // sync tabs to list
+                    me.syncTabsToList(theTabs, callback);
+                }
+            }
+            else if (list.length > 0) {
+                for (i = 0; i < currentTabs.length; i++) {
+                    if (i >= list.length || currentTabs[i].url != list[i].url) {
+                        console.log('Your tabs are not synced with the list!');
+                        if (confirm('Your tabs are not synced with TabList '+treeNode.id+':'+treeNode.title+'!\n\nSync now?')) {
+                            // sync tabs to list
+                            me.syncTabsToList(theTabs, callback);
+                        }
+                        break;
+                    }
+                    else {
+                        console.log('Bookmark '+i+' is in sync');
+                    }
+                }
+            }
+            else {
+                me.syncTabsToList(theTabs, callback);
+            }
+        } // end doCompare
+
+        if (Array.isArray(tabs)) {
+            doCompare(tabs);
+        }
+        else {
+            // Get all tabs in current window
+            chrome.tabs.query({}, function(results) {
+                if (chrome.runtime.lastError) {
+                    console.warn(chrome.runtime.lastError.message);
+                }
+
+                if (results) {
+                    doCompare(results);
+                }
+            });
+        }
+    } // end compareListToTabs
+
+    this.syncTabsToList = function(tabs, callback) {
+        console.group('Syncing tabs to list '+treeNode.id+':'+treeNode.title);
+
+        var list = treeNode.children;
+
+        for (var i = 0; i < tabs.length; i++) {
+            // check if index fits in current bookmark list
+            // if it does, we can update the bookmark instead of deleting & creating one
+            if (i < list.length) {
+                console.log('Updating bookmark '+i+' ('+list[i].id+')');
+
+                chrome.bookmarks.update(list[i].id, {
+                    'title': tabs[i].title,
+                    'url': tabs[i].url
+                });
+
+                // if we're within the original bookmark list length but this is the last tab,
+                // the rest of the bookmarks need to be deleted
+                if (i == tabs.length - 1) {
+                    for (var j = i + 1; j < list.length; j++) {
+                        console.log('Removing bookmark '+j+' ('+list[j].id+')');
+                        chrome.bookmarks.remove(list[j].id);
+                    }
+                }
+            }
+            // if we're past the original length, we need to create new bookmarks
+            else {
+                console.log('Creating bookmark '+i);
+                chrome.bookmarks.create({
+                    'parentId': treeNode.id,
+                    'title': tabs[i].title,
+                    'url': tabs[i].url
+                });
+            }
+            console.groupEnd();
+        }
+    } // end syncTabsToList
 
 } // end TabList class
 
