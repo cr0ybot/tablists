@@ -4,15 +4,15 @@
  * by Cory Hughart <cory@coryhughart.com>
  */
 
-var tlp,
-    loading,
-    tabListContainer,
-    tabLists;
+var tlp;
 
 function TabListPopup() {
     console.log('TabListPopup initialized!');
 
-    var me = this;
+    var me = this,
+        loading = document.getElementById('loading'),
+        tabListContainer = document.getElementById('tablists'),
+        tabLists;
 
     // Initialize via message to background
     chrome.runtime.sendMessage({request: 'tabLists'},function(response) {
@@ -31,17 +31,22 @@ function TabListPopup() {
             document.body.removeChild(loading);
         }, false);
         loading.classList.add('done');
+
+        me.renderAll();
     } // end init
 
-    /*
-    this.renderTabLists() {
+    this.renderAll = function() {
+        for (var i = 0; i < tabLists.length; i++) {
+            renderSingle(tabLists[i]);
+        }
+    } // end renderAll
+
+    this.renderSingle = function() {
         // TODO
-    } // end renderTabLists
-    */
+    } // end renderSingle
+
 } // end TabListPopup
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    loading = document.getElementById('loading');
-    tabListContainer = document.getElementById('tablists');
     tlp = new TabListPopup();
 });
