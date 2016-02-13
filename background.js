@@ -80,13 +80,13 @@ TabListManager.prototype.initMessageListener = function() {
 
             switch (message.request) {
                 case 'options':
-                    callback(options).bind(this);
+                    callback(options);
                 break;
                 case 'defaultOptions':
-                    callback(defaultOptions).bind(this);
+                    callback(defaultOptions);
                 break;
                 case 'tabLists':
-                    callback(tabLists).bind(this);
+                    callback(tabLists);
                 break;
                 default:
                     console.warn('Request message from '+sender+' received but not understood: '+message.request);
