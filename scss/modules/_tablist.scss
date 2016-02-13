@@ -2,7 +2,7 @@
 // TabList
 //
 
-.tablists {
+#tablists {
     display: flex;
     //flex-direction: column;
     //align-items: stretch;
@@ -106,18 +106,21 @@
         }
     }
 
-    .tab {
-        margin-top: 0.25em;
-        //list-style-position: inside;
-        list-style: none;
-        font-size: 0.75em;
+    .tabs {
 
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
+        li {
+            margin-top: 0.25em;
+            //list-style-position: inside;
+            list-style: none;
+            font-size: 0.75em;
 
-        &:first-child {
-            margin-top: 0;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            &:first-child {
+                margin-top: 0;
+            }
         }
 
         a, img {

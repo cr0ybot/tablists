@@ -19,7 +19,8 @@
   "permissions": [
     "tabs",
     "bookmarks",
-    "storage"
+    "storage",
+    "chrome://favicon/"
   ],
 
   "background": {
