@@ -16,9 +16,7 @@ var defaultOptions = {
     curentTabs;
 
 /**
- * TabListManager class
- * Since there will be only one, we are not using the "prototype" pattern,
- * especially since we need to be able to reference "this" quite often.
+ * BookmarkManager class
  * @constructor
  * @param {object} options - options object
  * @param {string} options.folderID - id of the folder that TabLists bookmarks will be saved to
@@ -27,8 +25,8 @@ var defaultOptions = {
  * @param {array} options.activeTab - an array of the active tab id for each TabList
  * @param {number} options.startupList - the id of the TabList to load at startup, or null for the last list that was active (overrides activeList)
  **/
-function TabListManager(passedOptions) {
-    console.log('TabListManager initialized!');
+function BookmarkManager(passedOptions) {
+    console.log('BookmarkManager initialized!');
 
     // Global message listener
     this.initMessageListener();
@@ -48,11 +46,11 @@ function TabListManager(passedOptions) {
         console.log('Options passed to init: '+JSON.stringify(passedOptions));
         this.checkOptions(passedOptions);
     }
-} // end TabListManager
+} // end BookmarkManager
 
-// TabListManager event listeners
+// BookmarkManager event listeners
 
-TabListManager.prototype.initMessageListener = function() {
+BookmarkManager.prototype.initMessageListener = function() {
     chrome.runtime.onMessage.addListener(function(message, sender, callback) {
         // Submit
         if (message.submit) {
@@ -95,7 +93,7 @@ TabListManager.prototype.initMessageListener = function() {
     }.bind(this));
 }
 
-TabListManager.prototype.initTabListeners = function() {
+BookmarkManager.prototype.initTabListeners = function() {
     console.log('Initializing tab event listeners...');
     /*
     onCreated
@@ -119,45 +117,45 @@ TabListManager.prototype.initTabListeners = function() {
     chrome.tabs.onReplaced.addListener(this.tabReplacedHandler);
 }
 
-TabListManager.prototype.tabCreatedHandler = function(tab) {
+BookmarkManager.prototype.tabCreatedHandler = function(tab) {
     // TODO
 }
 
-TabListManager.prototype.tabUpdatedHandler = function(tabId, changeInfo, tab) {
+BookmarkManager.prototype.tabUpdatedHandler = function(tabId, changeInfo, tab) {
     // TODO
 }
 
-TabListManager.prototype.tabMovedHandler = function(tabId, moveInfo) {
+BookmarkManager.prototype.tabMovedHandler = function(tabId, moveInfo) {
     // TODO
 }
 
-TabListManager.prototype.tabActivatedHandler = function(activeInfo) {
+BookmarkManager.prototype.tabActivatedHandler = function(activeInfo) {
     // TODO
 }
 
-TabListManager.prototype.tabDetachedHandler = function(tabId, detachInfo) {
+BookmarkManager.prototype.tabDetachedHandler = function(tabId, detachInfo) {
     // TODO
 }
 
-TabListManager.prototype.tabAttachedHandler = function(tabId, attachInfo) {
+BookmarkManager.prototype.tabAttachedHandler = function(tabId, attachInfo) {
     // TODO
 }
 
-TabListManager.prototype.tabRemovedHandler = function(tabId, removeInfo) {
+BookmarkManager.prototype.tabRemovedHandler = function(tabId, removeInfo) {
     // TODO
 }
 
-TabListManager.prototype.tabReplacedHandler = function(addedTabId, removedTabId) {
+BookmarkManager.prototype.tabReplacedHandler = function(addedTabId, removedTabId) {
     // TODO
 }
 
-// TabListManager class methods
+// BookmarkManager class methods
 
 /**
- * Checks options passed to TabListManager (if any)
+ * Checks options passed to BookmarkManager (if any)
  * Looks for folderID and kicks off tablist setup
  **/
-TabListManager.prototype.checkOptions = function(passedOptions) {
+BookmarkManager.prototype.checkOptions = function(passedOptions) {
     console.log('Checking options...');
 
     if (typeof passedOptions === 'object') {
@@ -193,9 +191,9 @@ TabListManager.prototype.checkOptions = function(passedOptions) {
 
     // Options are good, lets do things
     this.getBookmarks(options.folderID);
-} // end TabListManager.checkOptions
+} // end BookmarkManager.checkOptions
 
-TabListManager.prototype.saveOptions = function(data, callback) {
+BookmarkManager.prototype.saveOptions = function(data, callback) {
     console.log('Saving options...');
 
     options = data;
@@ -207,9 +205,9 @@ TabListManager.prototype.saveOptions = function(data, callback) {
 
         if (typeof callback === 'function') callback(options);
     }).bind(this);
-} // end TabListManager.saveOptions
+} // end BookmarkManager.saveOptions
 
-TabListManager.prototype.searchForBookmarksFolder = function(callback) {
+BookmarkManager.prototype.searchForBookmarksFolder = function(callback) {
     console.log('Checking for TabLists bookmarks folder...');
 
     var folderName = options.folderName || defaultOptions.folderName;
@@ -233,9 +231,9 @@ TabListManager.prototype.searchForBookmarksFolder = function(callback) {
     else {
         console.error('Cannot find TabLists bookmarks folder: No folderName set');
     }
-} // end TabListManager.searchForBookmarksFolder
+} // end BookmarkManager.searchForBookmarksFolder
 
-TabListManager.prototype.createBookmarksFolder = function(callback) {
+BookmarkManager.prototype.createBookmarksFolder = function(callback) {
     console.log('Creating TabLists bookmarks folder...');
 
     if (typeof options.folderName === 'string') {
@@ -254,9 +252,9 @@ TabListManager.prototype.createBookmarksFolder = function(callback) {
     else {
         if (typeof callback === 'function') callback(options);
     }
-} // end TabListManager.createBookmarksFolder
+} // end BookmarkManager.createBookmarksFolder
 
-TabListManager.prototype.getBookmarks = function(id, callback) {
+BookmarkManager.prototype.getBookmarks = function(id, callback) {
     console.log('Getting bookmark by id: '+id);
 
     chrome.bookmarks.getSubTree(id, function(results) {
@@ -281,9 +279,9 @@ TabListManager.prototype.getBookmarks = function(id, callback) {
             });
         }
     }.bind(this));
-} // end TabListManager.getBookmarks
-// end TabListManager class
+} // end BookmarkManager.getBookmarks
+// end BookmarkManager class
 
 
-// Initialize TabListManager
-var tlm = new TabListManager();
+// Initialize BookmarkManager
+var tlm = new BookmarkManager();
