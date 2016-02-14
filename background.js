@@ -205,7 +205,7 @@ TabListManager.prototype.saveOptions = function(data, callback) {
         console.log(options);
         console.groupEnd();
 
-        if (typeof callback === 'function') callback(options).bind(this);
+        if (typeof callback === 'function') callback(options);
     }).bind(this);
 } // end TabListManager.saveOptions
 
@@ -221,7 +221,7 @@ TabListManager.prototype.searchForBookmarksFolder = function(callback) {
                 options.folderID = results[0].id;
                 console.log(folderName+' folder found! ID: '+results[0].id);
                 // Save options & restart the init process
-                if (typeof callback === 'function') callback(options).bind(this);
+                if (typeof callback === 'function') callback(options);
             }
             else {
                 console.log(folderName+' folder not found!');
@@ -244,7 +244,7 @@ TabListManager.prototype.createBookmarksFolder = function(callback) {
             if (results && typeof results == 'object') {
                 options.folderID = results.id;
                 console.log('Bookmarks folder created: '+results.title+' ('+results.id+')');
-                if (typeof callback === 'function') callback(options).bind(this);
+                if (typeof callback === 'function') callback(options);
             }
             else {
                 console.error('Error creating root bookmarks folder');
