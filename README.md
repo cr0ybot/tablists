@@ -1,3 +1,7 @@
+**NO LONGER UNDER DEVELOPMENT**
+
+Check out [Conex](https://github.com/kesselborn/conex) instead!
+
 
 TabLists
 ========
